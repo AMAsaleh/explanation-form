@@ -1,1 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>أضف سؤالك</title>
+  <link href="style.css" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="container">
+    <h2 id="form-header">لم تجد موضوعك؟</h2>
+    <p class="intro">
+      من خلال هذا النموذج، يمكنك اقتراح موضوع قانوني ترى أنه يستحق التوضيح أو التحليل، وسنقوم بدراسته وطرحه ضمن شروحاتنا القادمة بما يحقق الفائدة للجميع بأسلوب مهني ومعتمد.  
+    </p>
 
+    <form action="https://formsubmit.co/ajax/info.mahmoud.sharaby@gmail.com" method="POST" id="faq-question-form">
+      <div class="form-group">
+        <label><i data-lucide="user"></i> الاسم ثلاثي</label>
+        <input type="text" name="الاسم" required />
+      </div>
+      <div class="form-group">
+        <label><i data-lucide="mail"></i> البريد الإلكتروني</label>
+        <input type="email" name="البريد الإلكتروني" required />
+      </div>
+      <div class="form-group">
+        <label><i data-lucide="phone"></i> رقم الهاتف</label>
+        <input type="tel" name="رقم الهاتف" required />
+      </div>
+      <div class="form-group">
+        <label><i data-lucide="help-circle"></i> سؤالك</label>
+        <textarea name="السؤال" rows="5" required></textarea>
+      </div>
+      <button type="submit"><i data-lucide="send"></i> إرسال السؤال</button>
+    </form>
+
+    <div id="confirmation-message" class="confirmation-message" style="display:none;">
+      تم استلام موضوعك بنجاح، وسنقوم بدراسته وطرحه ضمن محتوانا القادم، بما يحقق الفائدة للجميع.  
+      <br><br>
+      نشكرك على مساهمتك في تحسين محتوى الموقع.
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+    document.getElementById("faq-question-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(response => {
+        form.style.display = "none";
+        document.getElementById("confirmation-message").style.display = "block";
+        document.getElementById("form-header").scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      })
+      .catch(error => console.log(error));
+    });
+  </script>
+</body>
+  </html>
